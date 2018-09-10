@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tests on Sebastián Martínez</title>
-    <link>smartinez.co/test/</link>
+    <link>https://martinezsebastian.github.io/web/test/</link>
     <description>Recent content in Tests on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 11 Apr 2018 00:00:00 +0200</lastBuildDate>
     
-	<atom:link href="smartinez.co/test/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://martinezsebastian.github.io/web/test/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Algorithmical Intelligence and the policy process</title>
-      <link>smartinez.co/test/hi/</link>
+      <link>https://martinezsebastian.github.io/web/test/hi/</link>
       <pubDate>Wed, 11 Apr 2018 00:00:00 +0200</pubDate>
       
-      <guid>smartinez.co/test/hi/</guid>
+      <guid>https://martinezsebastian.github.io/web/test/hi/</guid>
       <description>Algorithmical Intelligence and the policy process At every point in time, people have probably claimed that &amp;lsquo;we are going through the most important moment in the history of mankind&amp;rsquo;. So I am going to go ahead and say that this is at very least, one of the most important moments in the history of mankind. With the advent of technology and computational power, algorithms determine most of the processes that shape our everyday lives.</description>
     </item>
     
