@@ -18,7 +18,7 @@ home = ["HTML", "RSS"]
 [params]
   header_image = "img/cali_mountain.jpg"
   SEOTitle = "Sebastián Martínez"
-  slogan = "I love my cheeky delicious monkey love . nhashjhasdhhasn dasjhadns "
+  slogan = "Ph.D Student - University of Glasgow"
 
   
 
@@ -28,8 +28,17 @@ home = ["HTML", "RSS"]
   # leancloud storage for page view counter
   page_view_conter = false
   
+    [[menu.main]]
+        name = "Home"
+        url = "#about"
+        weight = 1
 
-  # Sidebar settings
+    [[menu.main]]
+        name = "CV"
+        url = "static/resources/Sebastian_Martinez_CV.pdf"
+        weight = 2
+
+# Sidebar settings
   sidebar_about_description = "Ph.D. student at the University of Glasgow social networks, their statististical properties, and their possibilities for causal inference."
   sidebar_avatar = "img/foto.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
 
