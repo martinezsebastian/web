@@ -1,0 +1,43 @@
+baseurl = "smartinez.co"
+title = "Sebastián Martínez"
+theme = "s_theme"
+themesDir = "themes"
+languageCode = "en-us"
+
+
+disqusShortname = ""
+googleAnalytics = ""
+preserveTaxonomyNames = true
+paginate = 5 #frontpage pagination
+hasCJKLanguage = true
+
+[outputs]
+home = ["HTML", "RSS"]
+
+[params]
+  header_image = "img/cali_mountain.jpg"
+  SEOTitle = "Sebastián Martínez"
+  slogan = "Slogan here"
+
+  
+
+  image_404 = "img/404-bg.jpg"
+  title_404 = "Go back, nothing to see here."
+
+  # leancloud storage for page view counter
+  page_view_conter = false
+  
+
+  # Sidebar settings
+  sidebar_about_description = "Ph.D. student at the University of Glasgow social networks, their statististical properties, and their possibilities for causal inference."
+  sidebar_avatar = "img/foto.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
+
+  [params.social]
+  email          = "mail@smartinez.co"
+  twitter        = "https://twitter.com/sbmrtnz/"
+  linkedin       = "https://www.linkedin.com/in/sebasti%C3%A1n-mart%C3%ADnez-00184649/"
+  github         = "https://github.com/martinezsebastian"
+  
+[taxonommies]
+    tag = "tags"
+    link = "tags/"
