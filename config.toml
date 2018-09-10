@@ -1,5 +1,6 @@
 baseurl = "smartinez.co"
 title = "Sebastián Martínez"
+publishDir = "docs"
 theme = "s_theme"
 themesDir = "themes"
 languageCode = "en-us"

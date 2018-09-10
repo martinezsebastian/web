@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta name="google-site-verification" content="9vIieCe-Qpd78QOmBl63rGtIVbhY6sYyuxX3j8XWBA4" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="smartinez.co/img/favicon.ico">
+
+    <title>Dimensionality Reduction using Spectral Analysis-Sebastián Martínez</title>
+
+    <link rel="canonical" href="smartinez.co/smartinez.co/post/spectraldegreereduction/">
+
+    <link rel="stylesheet" href="smartinez.co/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="smartinez.co/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="smartinez.co/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="smartinez.co/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="smartinez.co/js/jquery.min.js"></script>
+    
+    
+    <script src="smartinez.co/js/bootstrap.min.js"></script>
+    
+    
+    <script src="smartinez.co/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="smartinez.co/">Sebastián Martínez</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="smartinez.co/">Home</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('smartinez.co/img/cali_mountain.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                    </div>
+                    <h1>Dimensionality Reduction using Spectral Analysis</h1>
+                    <h2 class="subheading"></h2>
+                    <span  class="meta">Posted by Sebastián Martínez on Wednesday, August 1, 2018
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+                <header>
+                <h2>TOC</h2>
+                </header>
+                <nav id="TableOfContents">
+<ul>
+<li><a href="#dimensionality-reduction-using-spectral-analysis">Dimensionality Reduction using Spectral Analysis</a>
+<ul>
+<li><a href="#the-shortest-algebra-section-ever">The Shortest Algebra Section Ever</a></li>
+<li><a href="#toy-example">Toy Example</a></li>
+</ul></li>
+</ul>
+</nav>
+		
+		
+
+<h1 id="dimensionality-reduction-using-spectral-analysis">Dimensionality Reduction using Spectral Analysis</h1>
+
+<p>This short document presents an interesting alternative to Principal
+Component Analysis by using spectral decomposition. The original content
+of this document is based on a
+<a href="https://juanitorduz.github.io/laplacian_eigenmaps_dim_red.html">presentation</a>
+given by Dr. Juan Orduz at the 2018 PyData Berlin conference. The linked
+post is a practical application using Python to perform non-linear
+dimensionality reduction based on spectral techniques. This post aims at
+replicating the same results, but using R instead.</p>
+
+<p>This is a list of all the packages you are going to need to carry out
+this exercise in R.</p>
+
+<ul>
+<li><code>loe</code>: Carries out the main calculations of the
+spectral analysis. Functions used: So and so</li>
+<li><code>igraph</code>: Graph analysis. Functions used: so and so</li>
+<li><code>ggplot2</code>: Plotting package. Carries out the main
+calculations of the spectral analysis</li>
+<li><code>scatterploted</code>: 3D plotting package.</li>
+<li><code>reshape</code>: Tydiverse package used to change the shape
+of dataframes. Functions used: so and s</li>
+</ul>
+
+<p><em>NOTE:</em> As this is only a &ldquo;translation&rdquo; post, we are going to follow the
+same examples from the original.</p>
+
+<h2 id="the-shortest-algebra-section-ever">The Shortest Algebra Section Ever</h2>
+
+<p>Consider <em>M</em><sub>*n<strong>x</strong>n*</sub>(ℝ) the space of all *n<strong>x</strong>n* matrices
+with real elements. Let $A\inM_{nxn}(\mathbb{R})$ be a symmetric
+matrix. *λ* ∈ ℂ is said to be an <em>eigenvalue</em> of A, with associated
+<em>eigenvector</em> *f* ∈ ℝ<sup><em>n</em></sup>,  *f* ≠ 0, if
+*A<strong>f* = *λ</strong>f*
+ Additionally, we say that a set of vectors
+ℬ = {<em>f</em><sub>1</sub>, <em>f</em><sub>2</sub>, ⋯, <em>f</em><sub><em>n</em></sub>} is a basis
+for ℝ<sup><em>n</em></sup> if 1. They are linearly independent; and 2. They
+generate ℝ<sup><em>n</em></sup> And we can say that ℬ is an orthonormal basis
+if for two elements <em>f</em><sub><em>i</em></sub>, <em>f</em><sub><em>j</em></sub> ∈ ℬ,
+$&lt;f_i,fj} = \delta_{ij}$.</p>
+
+<p>The Spectral Theorem, at the center of this entire post, suggests that
+there exists an orthonormal basis for ℝ<sup><em>n</em></sup> consisting of the
+eigenvalues of <em>A</em>, where each eigenvalue is real.</p>
+
+<h2 id="toy-example">Toy Example</h2>
+
+<p>Consider the adjacency matrix from the toy example:</p>
+
+<pre><code>adj_mat &lt;- matrix(c(0,1,1,1,1,0,0,0,1,0,0,0,1,0,0,0), nrow = 4, ncol = 4)
+adj_mat
+
+##      [,1] [,2] [,3] [,4]
+## [1,]    0    1    1    1
+## [2,]    1    0    0    0
+## [3,]    1    0    0    0
+## [4,]    1    0    0    0
+</code></pre>
+
+<p>We can create the graph associated to this matrix by using the
+<code>graph_from_adjacency_matrix</code> function from the
+<code>igraph</code> package. We also make the degree matrix, which
+places the degree of each one of the nodes in the graph in its diagonal,
+and the Laplacian matrix which calculates the difference between the
+degree matrix and the adjacency matrix.</p>
+
+<pre><code># Setting the graph from the adjacency matrix
+g &lt;- igraph::graph_from_adjacency_matrix(adjmatrix = adj_mat)
+
+# Giving it a name
+g &lt;- set_graph_attr(g, &quot;name&quot;, &quot;Toy Example&quot;)
+
+# Plotting the graph with smaller arrow sizes, and a title
+igraph::plot.igraph(x = g, edge.arrow.size = 0.5, main = &quot;Toy Example&quot;)
+</code></pre>
+
+<p><img src="SpectralDegreeReduction_files/figure-markdown_strict/unnamed-chunk-2-1.png" alt="" /></p>
+
+<pre><code># Degree matrix and Laplacian Matrix
+deg_mat &lt;- Diagonal(rowsum(adj_mat,group = c(1,1,1,1)), n = 4)
+laplacian &lt;- as.matrix(deg_mat-adj_mat)
+</code></pre>
+
+<p>We are now going to check what this projection of this two dimensional
+object onto ℝ looks like using the <code>spec.emb</code> function from
+the <code>loe</code> package. We need to include the number of
+dimensions of the desired space in which we want to project the graph.
+In this case, <em>y</em> contains the</p>
+
+<pre><code>y &lt;- loe::spec.emb(adj_mat,1)
+y
+
+## [1]  0.0000000 -0.5773503  0.7886751 -0.2113249
+</code></pre>
+
+<p>Using what we learned from the slides and the presentation available in
+the original post, we would like to check if, analitically, the result
+given by <code>loe::spec.emb</code> is what it should be.</p>
+
+<p>Recall that the first eigenvalue for our matrix was 1. Using <em>y</em></p>
+
+<pre><code>lambda_1 &lt;- 1
+
+a1 &lt;- laplacian %*% y
+a2 &lt;- lambda_1*(deg_mat %*% y)
+result &lt;- a1 - a2
+
+#make sphere in R
+
+number_points &lt;- 1000
+r &lt;- runif(number_points, min = 0, max = 2*pi)
+rho &lt;- runif(number_points, min = 0, max = 2*pi)
+
+x &lt;- sin(rho)*cos(r)
+y &lt;- sin(rho)*sin(r)
+z &lt;- cos(rho)
+data &lt;- as.data.frame(matrix(c(x, y, z), ncol =3))
+colnames(data) &lt;- c(&quot;x_ax&quot;,&quot;y_ax&quot;, &quot;z_ax&quot;)
+
+
+x &lt;- data$x_ax[!(abs(data$z_ax)&gt;0.99)]
+y &lt;- data$y_ax[!(abs(data$z_ax)&gt;0.99)]
+z &lt;- data$z_ax[!(abs(data$z_ax)&gt;0.99)]
+
+data_nopo &lt;- as.data.frame(matrix(c(x, y, z), ncol =3))
+colnames(data_nopo) &lt;- c(&quot;x_ax&quot;,&quot;y_ax&quot;, &quot;z_ax&quot;)
+x1 &lt;- rnorm(length(data_nopo$x_ax))
+
+s_colors &lt;- rgb(abs(data_nopo$x_ax), abs(data_nopo$y_ax), abs(data_nopo$z_ax), maxColorValue = 1)
+scatterplot3d(data_nopo, pch = 16, main=&quot;Sphere&quot;,
+              xlab = &quot;X&quot;,
+              ylab = &quot;Y&quot;,
+              zlab = &quot;Z&quot;,
+              box = FALSE,
+              color = s_colors)
+</code></pre>
+
+<p><img src="SpectralDegreeReduction_files/figure-markdown_strict/unnamed-chunk-5-1.png" alt="" /></p>
+
+<pre><code>ggplot2::ggplot(data = data_nopo, aes(x = x_ax, y = y_ax)) + geom_point( color = s_colors)
+</code></pre>
+
+<p><img src="SpectralDegreeReduction_files/figure-markdown_strict/unnamed-chunk-6-1.png" alt="" /></p>
+
+<pre><code>n_components &lt;- 2
+prin &lt;- prcomp(x = data_nopo, scale. = T, rank. = n_components)
+#prin$center
+#biplot(prin)
+prinx &lt;- prin$x[,1]
+priny &lt;- prin$x[,2]
+prin_comp &lt;- as.data.frame(matrix(c(prinx, priny), ncol = 2))
+colnames(prin_comp) &lt;- c(&quot;first&quot;, &quot;second&quot;)
+
+ggplot2::ggplot(data = prin_comp, aes(x = first, y = second)) + geom_point( color = s_colors)
+</code></pre>
+
+<p><img src="SpectralDegreeReduction_files/figure-markdown_strict/unnamed-chunk-6-2.png" alt="" /></p>
+
+<pre><code>n_neighbors &lt;- 50
+
+# Fit the object.
+nn &lt;- get.knn(data = data_nopo, k = n_neighbors)$nn.index
+nn &lt;- as.matrix(nn)
+nn &lt;- as.data.frame(nn)
+nn$id &lt;- rownames(nn)
+
+
+nn_melt &lt;- melt(nn, id.vars = c(&quot;id&quot;))
+nn_melt &lt;- melt(nn)
+
+## Using id as id variables
+
+nn_melt &lt;- nn_melt[c(&quot;id&quot;, &quot;value&quot;)]
+nn_melt$id &lt;- as.integer(nn_melt$id)
+
+
+g &lt;- graph.edgelist(as.matrix(nn_melt), directed=TRUE)
+#plot(g)
+
+g &lt;- graph.edgelist(as.matrix(nn_melt), directed=FALSE)
+#plot(g)
+
+adj_mat &lt;- as.data.frame(as.matrix(get.adjacency(graph = g)))
+adjmat &lt;- ifelse(adj_mat == 2, 1, ifelse(adj_mat == 1, 1, 0))
+
+
+spec_emb &lt;- spec.emb(A = as.matrix(adjmat), p = n_components)
+spec1 &lt;- spec_emb[,1]
+spec2 &lt;- spec_emb[,2]
+spec &lt;- as.data.frame(matrix(c(spec1, spec2), ncol = 2))
+colnames(spec) &lt;- c(&quot;first&quot;, &quot;second&quot;)
+
+
+ggplot2::ggplot(data = spec, aes(x = first, y = second)) + geom_point( color = s_colors)
+</code></pre>
+
+<p><img src="SpectralDegreeReduction_files/figure-markdown_strict/unnamed-chunk-6-3.png" alt="" /></p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="smartinez.co/post/evidenceweek/" data-toggle="tooltip" data-placement="top" title="#EvidenceWeek">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                     
+                    
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:mail@smartinez.co">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a href="https://twitter.com/sbmrtnz/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/martinezsebastian">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/sebasti%C3%A1n-mart%C3%ADnez-00184649/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Sebastián Martínez , 2018
+                    <br>
+                    | <a href="https://themes.gohugo.io/hugo-theme-cleanwhite"> My version of CleanWhite Hugo Theme.</a> Follow the link for the original version |
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+</body>
+</html>
