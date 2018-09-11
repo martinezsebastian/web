@@ -2,7 +2,7 @@
 draft: false
 title: "Algorithmical Intelligence and the policy process"
 date: 2018-04-11
-image:  "/resources/seuss.jpg"
+image:  "resources/seuss.jpg"
 showtoc: false
 ---
 
