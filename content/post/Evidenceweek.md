@@ -1,8 +1,9 @@
-+++
-draft = false
-title = "#EvidenceWeek"
-date = 2018-06-04
-+++
+---
+title: "#EvidenceWeek"
+date: 2018-06-04
+draft: false
+showtoc: false
+---
 
 
 #Evidencweek

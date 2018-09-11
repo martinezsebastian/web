@@ -1,8 +1,8 @@
-+++
-draft = false
+---
 title = "Dimensionality Reduction using Spectral Analysis"
 date = 2018-08-01
-+++
+draft = false
+---
 
 
 Dimensionality Reduction using Spectral Analysis
