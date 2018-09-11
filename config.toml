@@ -28,19 +28,11 @@ home = ["HTML", "RSS"]
   # leancloud storage for page view counter
   page_view_conter = false
   
-    [[menu.main]]
-        name = "Home"
-        url = "#about"
-        weight = 1
 
-    [[menu.main]]
-        name = "CV"
-        url = "resources/Sebastian_Martinez_CV.pdf"
-        weight = 2
 
 # Sidebar settings
   sidebar_about_description = "Ph.D. student at the University of Glasgow social networks, their statististical properties, and their possibilities for causal inference."
-  sidebar_avatar = "img/foto.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
+  sidebar_avatar = "resources/foto.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
 
   [params.social]
   email          = "mail@smartinez.co"
@@ -48,6 +40,17 @@ home = ["HTML", "RSS"]
   linkedin       = "https://www.linkedin.com/in/sebasti%C3%A1n-mart%C3%ADnez-00184649/"
   github         = "https://github.com/martinezsebastian"
   
-[taxonommies]
+[taxonomies]
     tag = "tags"
     link = "tags/"
+
+
+[[menu.main]]
+        name = "Home"
+        url = "#about"
+        weight = 1
+
+[[menu.main]]
+        name = "CV"
+        url = "resources/Sebastian_Martinez_CV.pdf"
+        weight = 2
