@@ -6,7 +6,7 @@
     <description>Recent content in Posts on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Aug 2018 00:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 01 Aug 2018 00:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://martinezsebastian.github.io/web/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Dimensionality Reduction using Spectral Analysis</title>
       <link>https://martinezsebastian.github.io/web/post/spectraldegreereduction/</link>
-      <pubDate>Wed, 01 Aug 2018 00:00:00 +0200</pubDate>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0100</pubDate>
       
       <guid>https://martinezsebastian.github.io/web/post/spectraldegreereduction/</guid>
       <description>Dimensionality Reduction using Spectral Analysis This short document presents an interesting alternative to Principal Component Analysis by using spectral decomposition. The original content of this document is based on a presentation given by Dr. Juan Orduz at the 2018 PyData Berlin conference. The linked post is a practical application using Python to perform non-linear dimensionality reduction based on spectral techniques. This post aims at replicating the same results, but using R instead.</description>
@@ -23,7 +23,7 @@
     <item>
       <title>#EvidenceWeek</title>
       <link>https://martinezsebastian.github.io/web/post/evidenceweek/</link>
-      <pubDate>Mon, 04 Jun 2018 00:00:00 +0200</pubDate>
+      <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>https://martinezsebastian.github.io/web/post/evidenceweek/</guid>
       <description>#Evidencweek Sense About Science is a charity that promotes proper use of science and evidence in the public sphere. As stated on its website, it looks to intervene to hold &amp;ldquo;those responsible to account&amp;rdquo;. One of their latest ventures is called Evidence Week. The premise of the event is to bring together Members of Parliament with community members and other interested parties to discuss the need and use of evidence in policy-making.</description>
@@ -32,7 +32,7 @@
     <item>
       <title>Facebook, or whoever controls the medium</title>
       <link>https://martinezsebastian.github.io/web/post/facebook/</link>
-      <pubDate>Fri, 13 Apr 2018 00:00:00 +0200</pubDate>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>https://martinezsebastian.github.io/web/post/facebook/</guid>
       <description>Facebook, or whoever controls the medium It has been argued that one of the things that allow the human race to go as far as it does is our ability to communicate and produce knowledge through argumentation. When doing my undergrad a friend used to say that we don&amp;rsquo;t really think until when we write it somewhere and make sure it makes sense (in some way, this blog is an exercise in articulation).</description>
@@ -40,10 +40,10 @@
     
     <item>
       <title>Algorithmical Intelligence and the policy process</title>
-      <link>https://martinezsebastian.github.io/web/post/algorithmical-intellingence/</link>
+      <link>https://martinezsebastian.github.io/web/post/algorithmical-intelligence/</link>
       <pubDate>Wed, 11 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://martinezsebastian.github.io/web/post/algorithmical-intellingence/</guid>
+      <guid>https://martinezsebastian.github.io/web/post/algorithmical-intelligence/</guid>
       <description>Algorithmical Intelligence and the policy process At every point in time, people have probably claimed that &amp;lsquo;we are going through the most important moment in the history of mankind&amp;rsquo;. So I am going to go ahead and say that this is at very least, one of the most important moments in the history of mankind. With the advent of technology and computational power, algorithms determine most of the processes that shape our everyday lives.</description>
     </item>
     

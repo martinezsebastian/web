@@ -1,8 +1,8 @@
----
++++
 title = "Dimensionality Reduction using Spectral Analysis"
 date = 2018-08-01
 draft = false
----
++++
 
 
 Dimensionality Reduction using Spectral Analysis
@@ -20,7 +20,7 @@ replicating the same results, but using R instead.
 This is a list of all the packages you are going to need to carry out
 this exercise in R.
 
--   <code>loe</code>: Carries out the main calculations of the
+ -   <code>loe</code>: Carries out the main calculations of the
     spectral analysis. Functions used: So and so
 -   <code>igraph</code>: Graph analysis. Functions used: so and so
 -   <code>ggplot2</code>: Plotting package. Carries out the main
