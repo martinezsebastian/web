@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://buendato.org/post/randomisation-inference/</loc>
+    <lastmod>2018-10-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://buendato.org/post/spectraldegreereduction/</loc>
     <lastmod>2018-08-01T00:00:00+01:00</lastmod>
   </url>
@@ -29,13 +34,13 @@
   
   <url>
     <loc>https://buendato.org/post/</loc>
-    <lastmod>2018-08-01T00:00:00+01:00</lastmod>
+    <lastmod>2018-10-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://buendato.org/</loc>
-    <lastmod>2018-08-01T00:00:00+01:00</lastmod>
+    <lastmod>2018-10-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

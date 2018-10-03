@@ -6,10 +6,22 @@
     <description>Recent content in Posts on Sebastián Martínez</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Aug 2018 00:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 03 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://buendato.org/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Randomisation Inference - worksheet</title>
+      <link>https://buendato.org/post/randomisation-inference/</link>
+      <pubDate>Wed, 03 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://buendato.org/post/randomisation-inference/</guid>
+      <description>Randomisation Inference - Worksheet This document looks to understand the examples in the Randomisation Inference package by Samii and Aronow.
+Initial examples We are first looking at the example in the dispdist help section. The description of the function is for &amp;ldquo;estimated ATE distribution display, summary and significance testing&amp;rdquo;
+We define the observed outcomes, yi, and the randomisation from the intervention, Zi.
+# Estimated Results y &amp;lt;- c(8,6,2,0,3,1,1,1,2,2,0,1,0,2,2,4,1,1) Z &amp;lt;- c(1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0) df &amp;lt;- data.</description>
+    </item>
     
     <item>
       <title>Dimensionality Reduction using Spectral Analysis</title>

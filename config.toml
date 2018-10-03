@@ -50,6 +50,7 @@ home = ["HTML", "RSS"]
         url = "#about"
         weight = 1
 
+
 [[menu.main]]
         name = "CV"
         url = "resources/Sebastian_Martinez_CV.pdf"

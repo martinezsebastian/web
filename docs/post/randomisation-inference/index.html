@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><head>
+    <meta name="google-site-verification" content="9vIieCe-Qpd78QOmBl63rGtIVbhY6sYyuxX3j8XWBA4" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="https://buendato.org/img/favicon.ico">
+
+    <title>Randomisation Inference - worksheet-Sebastián Martínez</title>
+
+    <link rel="canonical" href="https://buendato.org/post/randomisation-inference/">
+
+    <link rel="stylesheet" href="https://buendato.org/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="https://buendato.org/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="https://buendato.org/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="https://buendato.org/css/syntax.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="https://buendato.org/js/jquery.min.js"></script>
+    
+    
+    <script src="https://buendato.org/js/bootstrap.min.js"></script>
+    
+    
+    <script src="https://buendato.org/js/hux-blog.min.js"></script>
+</head>
+</head>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://buendato.org/">Sebastián Martínez</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://buendato.org/">Home</a>
+                    </li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header{
+        background-image: url('https://buendato.org/resources/cali_mountain.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       
+                    </div>
+                    <h1>Randomisation Inference - worksheet</h1>
+                    <h2 class="subheading"></h2>
+                    <span  class="meta">Posted by Sebastián Martínez on Wednesday, October 3, 2018
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		
+		
+		
+
+<h1 id="randomisation-inference-worksheet">Randomisation Inference - Worksheet</h1>
+
+<p>This document looks to understand the examples in the Randomisation Inference package by <a href="https://cran.r-project.org/web/packages/ri/ri.pdf">Samii and Aronow</a>.</p>
+
+<h2 id="initial-examples">Initial examples</h2>
+
+<p>We are first looking at the example in the <code>dispdist</code> help section. The description of the function is for &ldquo;estimated ATE distribution display, summary and significance testing&rdquo;</p>
+
+<p>We define the observed outcomes, <em>y</em><sub><em>i</em></sub>, and the randomisation from the intervention, <em>Z</em><sub><em>i</em></sub>.</p>
+
+<pre><code class="language-r"># Estimated Results
+y &lt;- c(8,6,2,0,3,1,1,1,2,2,0,1,0,2,2,4,1,1)
+Z &lt;- c(1,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0)
+df &lt;- data.frame(y, Z)
+</code></pre>
+
+<p>An initial exploration of the data shows that individuals who received treatment have a larger distribution of outcomes than those that did not. Some jitter is added to be able to differentiate some points with the same <em>y</em> value.</p>
+
+<pre><code class="language-r">g &lt;- ggplot(data = df, aes(x = Z, y = y)) + geom_jitter(width = 0.1, height = 0) + scale_x_discrete(limits = c(0,1), labels = c(&quot;Control&quot;, &quot;Treatment&quot;), name =&quot;Treatment type&quot;)
+</code></pre>
+
+<p><img src="/resources/treat-scatter.png" alt="Image here" /></p>
+
+<p>We now what to divide the observations further into clusters and blocks.</p>
+
+<pre><code class="language-r">cl &lt;- c(1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9)
+bl &lt;- c(rep(1,4),rep(2,6),rep(3,8))
+cluster &lt;- as.character(cl)
+block &lt;- as.character(bl)
+
+df &lt;- cbind(df, cl, bl, cluster, block)
+</code></pre>
+
+<p>Let us see what happens when we divide the observations by clusters (color), and by block (shape).</p>
+
+<pre><code class="language-r">g &lt;- ggplot(data = df, aes(x = Z, y = y)) + geom_jitter(aes(color = cluster, shape = block), width = 0.1, height = 0) + scale_x_discrete(limits = c(0,1), labels = c(&quot;Control&quot;, &quot;Treatment&quot;), name =&quot;Treatment type&quot;)
+g
+</code></pre>
+
+<p><img src="/resources/unnamed-chunk-4-1.png" alt="" /></p>
+
+<p>We are going to generate all the different permutations available considering the clusters and blocks the observations belong to.</p>
+
+<p>Comparing the permutation sets when considering only the blocks, only the clusters, or both variations we can see how the sample gets reduced when we impose more restrictions.</p>
+
+<table>
+<thead>
+<tr>
+<th>Blocks</th>
+<th>Clusters</th>
+<th>Both</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>6300</td>
+<td>126</td>
+<td>36</td>
+</tr>
+</tbody>
+</table>
+
+<p>Now we generate the probabilities of treatment considering the clusters and the blocks for observation.</p>
+
+<pre><code class="language-r">probs_cl &lt;- genprobexact(Z, clustvar = cluster)
+probs_bl &lt;- genprobexact(Z, blockvar = block)
+probs &lt;- genprobexact(Z, blockvar = block, clustvar = cluster)
+</code></pre>
+
+<p>The variable <code>probs</code> contains the probability of being part of the treatment group for each cluster/block group. Internally, the function makes use of a calculation of how many different permutations for each cluster-block combination are available given the observed treatment <em>Z</em>. If there is no cluster variable, each observation is assumed to be in its own cluster, similarly with the blocks.</p>
+
+<p>The function <code>estate</code> estimate the average treatment effect given an outcome variable (in our case, <em>y</em>), and a treatment variable (in our case <em>Z</em>), considering the probability of treatment assignment</p>
+
+<pre><code class="language-r"># ATE assuming equal probability
+ate_noprobs &lt;- estate(y, Z)
+</code></pre>
+
+<pre><code>## Warning in estate(y, Z): Probabilities not specified. Assuming equal
+## probabilities.
+</code></pre>
+
+<pre><code class="language-r"># ATE assuming only blocks
+ate_bl &lt;- estate(y, Z, prob = probs_bl)
+# ATE assuming only cluster
+ate_cl &lt;- estate(y, Z, prob = probs_cl)
+# ATE assuming both clusters and blocks
+ate &lt;- estate(y, Z, prob = probs)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Equal Prob</th>
+<th>Blocks</th>
+<th>Clusters</th>
+<th>Both</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1.9</td>
+<td>2</td>
+<td>1.9</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+<p>We are now interested in comparing the observed outcome variable <em>y</em> with a simulated outcome variable <em>y</em><sub><em>s</em></sub> which assumes there is no effect after being treated (the &lsquo;sharp null&rsquo; case). ``</p>
+
+<pre><code class="language-r"># Calculating the assumed outcome under the given ATE, in this case, a sharp null is assumed.
+# ys$Y0 stores the values that answer: what would have happened to the TREATED      observations had they NOT  been treated
+# ys$Y1 stores the values that answer: what would have happened to the NON-TREATED  observations had they      been treated
+# So, two scenarios: treated units do not improve, or non-treated units do improve. 
+sharp_null_ate &lt;- 0
+ys &lt;- genouts(y, Z, ate = sharp_null_ate) 
+</code></pre>
+
+<p>Now that we have the simulated outcome scenarios, we use the <code>gendist</code> function to calculate the average treatment effect for each one of the permutations calculated before. However, we are interested in estimating the difference between the distributions using the Horvitz-Thompson estimators (<code>HT = TRUE</code>) and the inverse-probability weighted regression estimator (<code>HT = FALSE</code>)</p>
+
+<pre><code class="language-r">## Blocks
+# Inverse-probability weighted regression estimators
+distout_bl &lt;- gendist(ys, perms_bl, prob = probs_bl, HT = FALSE) 
+# Horvits-Thompson estimators
+distout_bl_HT &lt;- gendist(ys, perms_bl, prob = probs_bl, HT = TRUE) 
+
+## Clusters
+# Inverse-probability weighted regression estimators
+distout_cl &lt;- gendist(ys, perms_cl, prob = probs_cl, HT = FALSE) 
+# Horvits-Thompson estimators
+distout_cl_HT &lt;- gendist(ys, perms_cl, prob = probs_cl, HT = TRUE) 
+
+
+## Blocks and Clusters
+# Inverse-probability weighted regression estimators
+distout &lt;- gendist(ys, perms, prob = probs, HT = FALSE) 
+# Horvits-Thompson estimators
+distout_HT &lt;- gendist(ys, perms, prob = probs, HT = TRUE) 
+
+ate_dist_bl &lt;- data.frame(ipw = distout_bl, ht = distout_bl_HT)
+ate_dist_cl &lt;- data.frame(ipw = distout_cl, ht = distout_cl_HT)
+ate_dist &lt;- data.frame(ipw = distout, ht = distout_HT)
+</code></pre>
+
+<p>We use the output from the previous sequence to feed into the <code>dispdist</code> function, which generates a set of results that include the <em>p</em> values and the standard deviations of the statistical tests from the randomisation. Additionally, it prints out a histogram with the density of results from the different permutations assuming the null hypothesis, and compares this with the observed Average Treatment Effect statistic.</p>
+
+<pre><code class="language-r">dispdist(distout, ate) # display characteristics of sampling dist. for inference
+</code></pre>
+
+<p><img src="/resources/ate-null-dist.png" alt="" /></p>
+
+<pre><code>## $two.tailed.p.value
+## [1] 0.1666667
+## 
+## $two.tailed.p.value.abs
+## [1] 0.1944444
+## 
+## $greater.p.value
+## [1] 0.08333333
+## 
+## $lesser.p.value
+## [1] 0.9444444
+## 
+## $quantile
+##      2.5%     97.5% 
+## -2.055556  2.222222 
+## 
+## $sd
+## [1] 1.440879
+## 
+## $exp.val
+## [1] 1.048454e-16
+</code></pre>
+
+<p>Using these results we cannot completely reject the null hypothesis that the treatment had a causal effect on the sampled population.</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/post/spectraldegreereduction/" data-toggle="tooltip" data-placement="top" title="Dimensionality Reduction using Spectral Analysis">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                     
+                    
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    <li>
+                        <a href="mailto:mail@smartinez.co">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    <li>
+                        <a href="https://twitter.com/sbmrtnz/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/martinezsebastian">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/sebasti%C3%A1n-mart%C3%ADnez-00184649/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Sebastián Martínez , 2018
+                    <br>
+                    | <a href="https://themes.gohugo.io/hugo-theme-cleanwhite"> My version of CleanWhite Hugo Theme.</a> Follow the link for the original version |
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+</body>
+</html>
