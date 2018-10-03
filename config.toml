@@ -1,4 +1,4 @@
-baseurl = "https://buendato.org"
+baseurl = "https://martinezsebastian.github.io/web/"
 title = "Sebastián Martínez"
 publishDir = "docs"
 theme = "s_theme"
