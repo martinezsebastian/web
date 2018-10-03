@@ -28,8 +28,8 @@ An initial exploration of the data shows that individuals who received treatment
 ``` r
 g <- ggplot(data = df, aes(x = Z, y = y)) + geom_jitter(width = 0.1, height = 0) + scale_x_discrete(limits = c(0,1), labels = c("Control", "Treatment"), name ="Treatment type")
 ```
+{{< figure src="resources/treat-scatter.png" >}}
 
-![Image here](resources/treat-scatter.png)
 
 We now what to divide the observations further into clusters and blocks.
 
